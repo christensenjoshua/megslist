@@ -43,6 +43,16 @@
                     <button class="btn btn-primary" type="button" @click="createHouse">Create</button>
                 </form>
             </div>
+            <div class="col-4" v-for="(house, index) in houses">
+                <p>{{house.bedrooms}}</p>
+                <p>{{house.bathrooms}}</p>
+                <img :src="house.imgUrl" style="width:100%" />
+                <p>{{house.levels}}</p>
+                <p>{{house.years}}</p>
+                <p>{{house.price}}</p>
+                <p>{{house.description}}</p>
+                <button class="btn btn-danger" @click="deleteHouse(index)">Delete</button>
+            </div>
         </div>
 
     </div>
@@ -54,15 +64,21 @@
         name: 'houses',
         data() {
             return {
-                houses: [],
                 house: {}
             }
         },
-        computed: {},
+        computed: {
+            houses() {
+                return this.$store.state.houses
+            }
+        },
         methods: {
             createHouse() {
-                this.houses.push(this.house)
+                this.$store.dispatch('addHouse', this.house)
                 this.house = {}
+            },
+            deleteHouse(index) {
+                this.$store.dispatch('removeHouse', this.house)
             }
         },
         components: {}

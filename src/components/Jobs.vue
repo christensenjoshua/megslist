@@ -33,6 +33,13 @@
                     <button class="btn btn-primary" type="button" @click="createJob">Create</button>
                 </form>
             </div>
+            <div class="col-4" v-for="(job, index) in jobs">
+                <p>{{job.company}}</p>
+                <p>{{job.title}}</p>
+                <p>{{job.rate}}</p>
+                <p>{{job.description}}</p>
+                <button class="btn btn-danger" @click="deleteJob(index)">Delete</button>
+            </div>
         </div>
 
     </div>
@@ -44,15 +51,21 @@
         name: 'jobs',
         data() {
             return {
-                jobs: [],
                 job: {}
             }
         },
-        computed: {},
+        computed: {
+            jobs() {
+                return this.$store.state.jobs
+            }
+        },
         methods: {
             createJob() {
-                this.jobs.push(this.job),
-                    this.job = {}
+                this.$store.dispatch('addJob', this.job)
+                this.job = {}
+            },
+            deleteJob(index) {
+                this.$store.dispatch('removeJob', index)
             }
         },
         components: {}

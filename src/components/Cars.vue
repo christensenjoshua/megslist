@@ -57,18 +57,21 @@
         name: 'cars',
         data() {
             return {
-                cars: [],
                 car: {}
             }
         },
-        computed: {},
+        computed: {
+            cars() {
+                return this.$store.state.cars
+            }
+        },
         methods: {
             createCar() {
-                this.cars.push(this.car)
+                this.$store.dispatch("addCar", this.car)
                 this.car = {}
             },
             deleteCar(index) {
-                this.cars.splice(index, 1)
+                this.$store.dispatch("removeCar", index)
             }
         },
         components: {}
