@@ -45,7 +45,7 @@
                 <p>{{car.year}}</p>
                 <p>{{car.price}}</p>
                 <p>{{car.description}}</p>
-                <router-link :to="{name: 'Car', params:{id: car._id}}">View Details</router-link>
+                <router-link class="btn btn-info" :to="{name: 'Car', params:{id: car._id}}">View Details</router-link>
                 <button class="btn btn-danger" @click="deleteCar(car._id)">Delete</button>
             </div>
         </div>

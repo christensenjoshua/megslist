@@ -2,7 +2,7 @@
     <div class="cars">
         <router-link class="btn btn-primary" :to="{name: 'Dashboard'}">Home</router-link>
         <div class="row">
-            <div v-if="car._id" class="col-4 item">
+            <div v-if="car" class="col-4 item">
                 <p>{{car.make}}</p>
                 <p>{{car.model}}</p>
                 <img :src="car.imgUrl" style="width:100%" />
@@ -41,6 +41,7 @@
                 this.$store.dispatch('editCar', car)
             },
             deleteCar(id) {
+                //need to handle what to do about drawing stuff on the individual car page.
                 this.$store.dispatch("removeCar", id)
             }
         }
