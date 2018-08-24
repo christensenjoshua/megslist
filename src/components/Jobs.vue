@@ -2,6 +2,7 @@
     <div class="jobs">
         <div class="row">
             <div class="col-12">
+                <router-link class="btn btn-primary" :to="{name: 'Dashboard'}">Home</router-link>
                 <h3>Jobs</h3>
                 <form>
                     <div class="form-row">

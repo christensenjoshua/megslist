@@ -2,6 +2,7 @@
     <div class="cars">
         <div class="row">
             <div class="col-12">
+                <router-link class="btn btn-primary" :to="{name: 'Dashboard'}">Home</router-link>
                 <h3>Cars</h3>
                 <form>
                     <div class="form-row">
@@ -44,7 +45,7 @@
                 <p>{{car.year}}</p>
                 <p>{{car.price}}</p>
                 <p>{{car.description}}</p>
-                <button class="btn btn-success" @click="bid(car)">Bid</button>
+                <router-link :to="{name: 'Car', params:{id: car._id}}">View Details</router-link>
                 <button class="btn btn-danger" @click="deleteCar(car._id)">Delete</button>
             </div>
         </div>
@@ -60,6 +61,9 @@
             return {
                 car: {}
             }
+        },
+        mounted() {
+            this.$store.dispatch('getAllCars')
         },
         computed: {
             cars() {

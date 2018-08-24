@@ -7,7 +7,12 @@
 
 <script>
   export default {
-    name: 'App'
+    name: 'App',
+    mounted() {
+      this.$store.dispatch('getAllCars')
+      this.$store.dispatch('getAllHouses')
+      this.$store.dispatch('getAllJobs')
+    }
   }
 </script>
 

@@ -3,12 +3,9 @@
     <div class="row">
       <div class="col-12">
         <h1>Dashboard</h1>
-        <button class="btn btn-info" @click="toggleCars">Cars</button>
-        <button class="btn btn-info" @click="toggleHouses">Houses</button>
-        <button class="btn btn-info" @click="toggleJobs">Jobs</button>
-        <Cars v-show="showCars"></Cars>
-        <Houses v-show="showHouses"></Houses>
-        <Jobs v-show="showJobs"></Jobs>
+        <router-link class="btn btn-primary" :to="{name: 'cars'}">Cars</router-link>
+        <router-link class="btn btn-primary" :to="{name: 'houses'}">Houses</router-link>
+        <router-link class="btn btn-primary" :to="{name: 'jobs'}">Jobs</router-link>
       </div>
     </div>
   </div>
@@ -20,11 +17,6 @@
   import Jobs from './Jobs'
   export default {
     name: 'dashboard',
-    mounted() {
-      this.$store.dispatch('getAllCars')
-      this.$store.dispatch('getAllHouses')
-      this.$store.dispatch('getAllJobs')
-    },
     data() {
       return {
         showCars: true,
@@ -74,7 +66,5 @@
     margin: 0 10px;
   }
 
-  a {
-    color: #42b983;
-  }
+  a {}
 </style>
