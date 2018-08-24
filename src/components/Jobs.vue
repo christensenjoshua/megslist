@@ -10,8 +10,8 @@
                             <input type="text" class="form-control" placeholder="Company" name="company" v-model="job.company">
                         </div>
                         <div class="col">
-                            <label class="sr-only" for="title">Title</label>
-                            <input type="text" class="form-control" placeholder="Title" name="title" v-model="job.title">
+                            <label class="sr-only" for="jobTitle">Title</label>
+                            <input type="text" class="form-control" placeholder="Title" name="jobTitle" v-model="job.jobTitle">
                         </div>
                     </div>
                     <div class="form-row">
@@ -33,12 +33,13 @@
                     <button class="btn btn-primary" type="button" @click="createJob">Create</button>
                 </form>
             </div>
-            <div class="col-4" v-for="(job, index) in jobs">
+            <div class="col-4 item" v-for="(job, index) in jobs">
                 <p>{{job.company}}</p>
-                <p>{{job.title}}</p>
+                <p>{{job.jobTitle}}</p>
                 <p>{{job.rate}}</p>
                 <p>{{job.description}}</p>
-                <button class="btn btn-danger" @click="deleteJob(index)">Delete</button>
+                <button class="btn btn-success" @click="bid(job)">Bid</button>
+                <button class="btn btn-danger" @click="deleteJob(job._id)">Delete</button>
             </div>
         </div>
 
@@ -64,8 +65,12 @@
                 this.$store.dispatch('addJob', this.job)
                 this.job = {}
             },
-            deleteJob(index) {
-                this.$store.dispatch('removeJob', index)
+            bid(job) {
+                job.rate -= 1
+                this.$store.dispatch('editJob', job)
+            },
+            deleteJob(id) {
+                this.$store.dispatch('removeJob', id)
             }
         },
         components: {}

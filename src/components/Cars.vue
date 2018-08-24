@@ -37,14 +37,15 @@
                     <button class="btn btn-primary" type="button" @click="createCar">Create</button>
                 </form>
             </div>
-            <div class="col-4" v-for="(car, index) in cars">
+            <div class="col-4 item" v-for="(car, index) in cars">
                 <p>{{car.make}}</p>
                 <p>{{car.model}}</p>
                 <img :src="car.imgUrl" style="width:100%" />
                 <p>{{car.year}}</p>
                 <p>{{car.price}}</p>
                 <p>{{car.description}}</p>
-                <button class="btn btn-danger" @click="deleteCar(index)">Delete</button>
+                <button class="btn btn-success" @click="bid(car)">Bid</button>
+                <button class="btn btn-danger" @click="deleteCar(car._id)">Delete</button>
             </div>
         </div>
 
@@ -70,8 +71,12 @@
                 this.$store.dispatch("addCar", this.car)
                 this.car = {}
             },
-            deleteCar(index) {
-                this.$store.dispatch("removeCar", index)
+            bid(car) {
+                car.price += 100
+                this.$store.dispatch('editCar', car)
+            },
+            deleteCar(id) {
+                this.$store.dispatch("removeCar", id)
             }
         },
         components: {}

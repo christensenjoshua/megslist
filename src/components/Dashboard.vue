@@ -20,6 +20,11 @@
   import Jobs from './Jobs'
   export default {
     name: 'dashboard',
+    mounted() {
+      this.$store.dispatch('getAllCars')
+      this.$store.dispatch('getAllHouses')
+      this.$store.dispatch('getAllJobs')
+    },
     data() {
       return {
         showCars: true,

@@ -1,5 +1,11 @@
 import vue from 'vue'
 import vuex from 'vuex'
+import axios from 'axios'
+
+let api = axios.create({
+    baseURL: 'https://bcw-gregslist.herokuapp.com/api/',
+    timeout: 3000
+})
 
 vue.use(vuex)
 
@@ -10,44 +16,77 @@ let store = new vuex.Store({
         jobs: []
     },
     mutations: {
-        setCar(state, newCar) {
-            state.cars.push(newCar)
+        setCars(state, payload) {
+            state.cars = payload
         },
-        removeCar(state, index) {
-            state.cars.splice(index, 1)
+        setHouses(state, payload) {
+            state.houses = payload
         },
-        setHouse(state, newHouse) {
-            state.houses.push(newHouse)
-        },
-        removeHouse(state, index) {
-            state.houses.splice(index, 1)
-        },
-        setJob(state, newJob) {
-            state.jobs.push(newJob)
-        },
-        removeJob(state, index) {
-            state.jobs.splice(index, 1)
+        setJobs(state, payload) {
+            state.jobs = payload
         }
     },
     actions: {
-        addCar({ commit, dispatch }, newCar) {
-            commit("setCar", newCar)
+        getAllCars({ commit, dispatch }) {
+            api.get('cars').then(res => {
+                commit('setCars', res.data.data)
+            })
         },
-        removeCar({ commit, dispatch }, index) {
-            commit("removeCar", index)
+        addCar({ commit, dispatch }, newCar) {
+            api.post('cars', newCar).then(res => {
+                dispatch('getAllCars')
+            })
+        },
+        editCar({ commit, dispatch }, car) {
+            api.put('cars/' + car._id, car).then(res => {
+                dispatch('getAllCars')
+            })
+        },
+        removeCar({ commit, dispatch }, id) {
+            api.delete('cars/' + id).then(res => {
+                dispatch('getAllCars')
+            })
+        },
+        getAllHouses({ commit, dispatch }) {
+            api.get('houses').then(res => {
+                commit('setHouses', res.data.data)
+            })
         },
         addHouse({ commit, dispatch }, newHouse) {
-            commit('setHouse', newHouse)
+            api.post('houses', newHouse).then(res => {
+                dispatch('getAllHouses')
+            })
         },
-        removeHouse({ commit, dispatch }, index) {
-            commit('removeHouse', index)
+        editHouse({ commit, dispatch }, house) {
+            api.put('houses/' + house._id, house).then(res => {
+                dispatch('getAllHouses')
+            })
+        },
+        removeHouse({ commit, dispatch }, id) {
+            api.delete('/houses/' + id).then(res => {
+                dispatch('getAllHouses')
+            })
+        },
+        getAllJobs({ commit, dispatch }) {
+            api.get('jobs').then(res => {
+                commit('setJobs', res.data.data)
+            })
         },
         addJob({ commit, dispatch }, newJob) {
-            commit('setJob', newJob)
+            api.post('jobs', newJob).then(res => {
+                dispatch('getAllJobs')
+            })
         },
-        removeJob({ commit, dispatch }, index) {
-            commit('removeJob', index)
-        }
+        editJob({ commit, dispatch }, job) {
+            api.put('jobs/' + job._id, job).then(res => {
+                dispatch('getAllJobs')
+            })
+        },
+        removeJob({ commit, dispatch }, id) {
+            api.delete('jobs/' + id).then(res => {
+                dispatch('getAllJobs')
+            })
+        },
     }
 })
 

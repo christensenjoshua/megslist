@@ -43,7 +43,7 @@
                     <button class="btn btn-primary" type="button" @click="createHouse">Create</button>
                 </form>
             </div>
-            <div class="col-4" v-for="(house, index) in houses">
+            <div class="col-4 item" v-for="(house, index) in houses">
                 <p>{{house.bedrooms}}</p>
                 <p>{{house.bathrooms}}</p>
                 <img :src="house.imgUrl" style="width:100%" />
@@ -51,7 +51,8 @@
                 <p>{{house.years}}</p>
                 <p>{{house.price}}</p>
                 <p>{{house.description}}</p>
-                <button class="btn btn-danger" @click="deleteHouse(index)">Delete</button>
+                <button class="btn btn-success" @click="bid(house)">Bid</button>
+                <button class="btn btn-danger" @click="deleteHouse(house._id)">Delete</button>
             </div>
         </div>
 
@@ -77,8 +78,12 @@
                 this.$store.dispatch('addHouse', this.house)
                 this.house = {}
             },
-            deleteHouse(index) {
-                this.$store.dispatch('removeHouse', this.house)
+            bid(house) {
+                house.price += 1000
+                this.$store.dispatch('editHouse', house)
+            },
+            deleteHouse(id) {
+                this.$store.dispatch('removeHouse', id)
             }
         },
         components: {}
