@@ -33,6 +33,10 @@ export default new Router({
       name: 'Car',
       props: true,
       component: Car
+    },
+    {
+      path: '*',
+      redirect: '/'
     }
   ]
 })
