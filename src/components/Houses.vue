@@ -49,11 +49,11 @@
                 <p>{{house.bathrooms}}</p>
                 <img :src="house.imgUrl" style="width:100%" />
                 <p>{{house.levels}}</p>
-                <p>{{house.years}}</p>
+                <p>{{house.year}}</p>
                 <p>{{house.price}}</p>
                 <p>{{house.description}}</p>
                 <button class="btn btn-success" @click="bid(house)">Bid</button>
-                <button class="btn btn-danger" @click="deleteHouse(house._id)">Delete</button>
+                <button class="btn btn-danger" @click="deleteHouse(house.id)">Delete</button>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal" @click="changeHouse(house)">
                     Edit
                 </button>
@@ -109,7 +109,8 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" @click="editHouse(aHouse)" data-dismiss="modal">Save
-                                changes</button>
+                                changes
+                            </button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                         </div>
                     </div>

@@ -40,7 +40,7 @@
                 <p>{{job.rate}}</p>
                 <p>{{job.description}}</p>
                 <button class="btn btn-success" @click="bid(job)">Bid</button>
-                <button class="btn btn-danger" @click="deleteJob(job._id)">Delete</button>
+                <button class="btn btn-danger" @click="deleteJob(job.id)">Delete</button>
             </div>
         </div>
 

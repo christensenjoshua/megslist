@@ -1,6 +1,8 @@
 import vue from 'vue'
 import vuex from 'vuex'
 import axios from 'axios'
+import firebase from 'firebase/app'
+import db from '../utils/firebaseInit'
 
 let api = axios.create({
     baseURL: 'https://bcw-gregslist.herokuapp.com/api/',
@@ -28,100 +30,83 @@ let store = new vuex.Store({
     },
     actions: {
         getAllCars({ commit, dispatch }) {
-            api.get('cars').then(res => {
-                commit('setCars', res.data.data)
-            }).catch(err => {
-                console.error(err.response.data.message)
-            }
-            )
+            db.collection('cars').get().then(querySnapSnot => {
+                let cars = []
+                querySnapSnot.forEach(doc => {
+                    let car = doc.data()
+                    car.id = doc.id
+                    cars.push(car)
+                })
+                commit('setCars', cars)
+            })
         },
         addCar({ commit, dispatch }, newCar) {
-            api.post('cars', newCar).then(res => {
+            db.collection('cars').add(newCar).then(doc => {
                 dispatch('getAllCars')
-            }).catch(err => {
-                console.error(err.response.data.message)
-            }
-            )
+            })
         },
         editCar({ commit, dispatch }, car) {
-            api.put('cars/' + car._id, car).then(res => {
+            db.collection('cars').doc(car.id).set(car).then(() => {
                 dispatch('getAllCars')
-            }).catch(err => {
-                console.error(err.response.data.message)
-            }
-            )
+            })
         },
         removeCar({ commit, dispatch }, id) {
-            api.delete('cars/' + id).then(res => {
+            db.collection('cars').doc(id).delete().then(() => {
                 dispatch('getAllCars')
-            }).catch(err => {
-                console.error(err.response.data.message)
-            }
-            )
+            })
         },
         getAllHouses({ commit, dispatch }) {
-            api.get('houses').then(res => {
-                commit('setHouses', res.data.data)
-            }).catch(err => {
-                console.error(err.response.data.message)
-            }
-            )
+            db.collection('houses').get().then(querySnapShot => {
+                let houses = []
+                querySnapShot.forEach(doc => {
+                    let house = doc.data()
+                    house.id = doc.id
+                    houses.push(house)
+                })
+                commit('setHouses', houses)
+            })
+
         },
         addHouse({ commit, dispatch }, newHouse) {
-            api.post('houses', newHouse).then(res => {
+            db.collection('houses').add(newHouse).then(doc => {
                 dispatch('getAllHouses')
-            }).catch(err => {
-                console.error(err.response.data.message)
-            }
-            )
+            })
         },
         editHouse({ commit, dispatch }, house) {
-            api.put('houses/' + house._id, house).then(res => {
+            db.collection('houses').doc(house.id).set(house).then(() => {
                 dispatch('getAllHouses')
-            }).catch(err => {
-                console.error(err.response.data.message)
-            }
-            )
+            })
         },
         removeHouse({ commit, dispatch }, id) {
-            api.delete('/houses/' + id).then(res => {
-                dispatch('getAllHouses')
-            }).catch(err => {
-                console.error(err.response.data.message)
-            }
-            )
+            db.collection('houses').doc(id).delete().then(() => {
+                dispatch()
+            })
         },
         getAllJobs({ commit, dispatch }) {
-            api.get('jobs').then(res => {
-                commit('setJobs', res.data.data)
-            }).catch(err => {
-                console.error(err.response.data.message)
-            }
-            )
+            db.collection('jobs').get().then(querySnapShot => {
+                let jobs = []
+                querySnapShot.forEach(doc => {
+                    let job = doc.data()
+                    job.id = doc.id
+                    jobs.push(job)
+                })
+                commit('setJobs', jobs)
+            })
         },
         addJob({ commit, dispatch }, newJob) {
-            api.post('jobs', newJob).then(res => {
+            db.collection('jobs').add(newJob).then(doc => {
                 dispatch('getAllJobs')
-            }).catch(err => {
-                console.error(err.response.data.message)
-            }
-            )
+            })
         },
         editJob({ commit, dispatch }, job) {
-            api.put('jobs/' + job._id, job).then(res => {
+            db.collection('jobs').doc(job.id).set(job).then(() => {
                 dispatch('getAllJobs')
-            }).catch(err => {
-                console.error(err.response.data.message)
-            }
-            )
+            })
         },
         removeJob({ commit, dispatch }, id) {
-            api.delete('jobs/' + id).then(res => {
+            db.collection('jobs').doc(id).delete().then(() => {
                 dispatch('getAllJobs')
-            }).catch(err => {
-                console.error(err.response.data.message)
-            }
-            )
+            })
         },
     }
 })

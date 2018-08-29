@@ -1,7 +1,7 @@
 <template>
     <div class="cars">
         <router-link class="btn btn-primary" :to="{name: 'Dashboard'}">Home</router-link>
-        <router-link class="btn btn-primary" :to="{name: 'Cars'}">Cars</router-link>
+        <router-link class="btn btn-primary" :to="{name: 'cars'}">Cars</router-link>
         <div class="row">
             <div v-if="car" class="col-4 item">
                 <p>{{car.make}}</p>
@@ -11,7 +11,7 @@
                 <p>{{car.price}}</p>
                 <p>{{car.description}}</p>
                 <button class="btn btn-success" @click="bid(car)">Bid</button>
-                <button class="btn btn-danger" @click="deleteCar(car._id)">Delete</button>
+                <button class="btn btn-danger" @click="deleteCar(car.id)">Delete</button>
             </div>
         </div>
 
@@ -29,7 +29,7 @@
         },
         computed: {
             car() {
-                return this.$store.state.cars.find(car => car._id == this.id)
+                return this.$store.state.cars.find(car => car.id == this.id)
             }
         },
         methods: {

@@ -27,7 +27,7 @@
   }
 
   .item {
-    padding: 5px;
+    padding: 1rem;
     border: 1px solid black;
   }
 </style>
